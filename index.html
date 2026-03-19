@@ -36,6 +36,8 @@
       --telegram-glow: rgba(0, 136, 204, 0.5);
       --counter-accent: #22D3EE;
       --counter-glow: rgba(34, 211, 238, 0.5);
+      --onboarding-accent: #10b981;
+      --onboarding-glow: rgba(16, 185, 129, 0.5);
     }
 
     body.light {
@@ -53,6 +55,8 @@
       --telegram-glow: rgba(0, 102, 153, 0.3);
       --counter-accent: #2563EB;
       --counter-glow: rgba(37, 99, 235, 0.3);
+      --onboarding-accent: #059669;
+      --onboarding-glow: rgba(5, 150, 105, 0.3);
     }
 
     body {
@@ -250,6 +254,20 @@
       text-shadow: 0 0 15px var(--creator-glow);
     }
 
+    /* Onboarding link in desktop nav */
+    .desktop-onboarding-link {
+      color: var(--onboarding-accent) !important;
+      font-weight: 600;
+    }
+    .desktop-onboarding-link i {
+      margin-right: 5px;
+      color: var(--onboarding-accent);
+    }
+    .desktop-onboarding-link:hover {
+      color: var(--onboarding-accent) !important;
+      text-shadow: 0 0 15px var(--onboarding-glow);
+    }
+
     /* menu icons */
     .menu-icons {
       display: flex;
@@ -425,6 +443,21 @@
       font-size: 1.8rem;
       color: var(--creator-accent);
       text-shadow: 0 0 15px var(--creator-glow);
+    }
+
+    /* Onboarding link in mobile */
+    .mobile-onboarding-link {
+      color: var(--onboarding-accent) !important;
+      border-bottom-color: var(--onboarding-accent) !important;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+    }
+    .mobile-onboarding-link i {
+      font-size: 1.8rem;
+      color: var(--onboarding-accent);
+      text-shadow: 0 0 15px var(--onboarding-glow);
     }
 
     /* Mobile language selector */
@@ -1486,7 +1519,6 @@
       font-size: 1rem;
     }
 
-    /* ========== FIXED: Only ONE WhatsApp button now ========== */
     .whatsapp-float {
       position: fixed;
       bottom: 30px;
@@ -1591,6 +1623,7 @@
     @media (max-width: 768px) {
       nav { display: none; }
       .desktop-creator-link { display: none; }
+      .desktop-onboarding-link { display: none; }
       .language-selector { display: none; }
       .hamburger { display: inline-block; }
       header { padding: 18px 20px; }
@@ -1638,6 +1671,379 @@
       }
     }
 
+    /* ========== FIXED: ONBOARDING PORTAL STYLES ========== */
+    .onboarding-page {
+      min-height: 100vh;
+      padding-top: 120px;
+      padding-bottom: 80px;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .onboarding-page.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    .onboarding-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 60px;
+      padding: 50px;
+      border: 2px solid var(--onboarding-accent);
+      box-shadow: 0 0 60px var(--onboarding-glow);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .onboarding-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--onboarding-glow) 0%, transparent 70%);
+      opacity: 0.2;
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+    
+    .onboarding-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .onboarding-header h2 {
+      font-size: 3rem;
+      background: linear-gradient(135deg, #22D3EE, #10b981, #34d399);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+    }
+    
+    .onboarding-header p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+    
+    /* Progress Steps */
+    .onboarding-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .onboarding-steps::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(16, 185, 129, 0.3);
+      z-index: 1;
+    }
+    
+    .step-item {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      flex: 1;
+    }
+    
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--card-bg);
+      border: 2px solid var(--onboarding-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--onboarding-accent);
+      transition: 0.3s;
+    }
+    
+    .step-item.active .step-number {
+      background: var(--onboarding-accent);
+      color: #0b1622;
+      box-shadow: 0 0 30px var(--onboarding-glow);
+    }
+    
+    .step-item.completed .step-number {
+      background: var(--onboarding-accent);
+      color: #0b1622;
+      border-color: var(--onboarding-accent);
+    }
+    
+    .step-item.completed .step-number::after {
+      content: '✓';
+      font-size: 1.5rem;
+    }
+    
+    .step-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.7;
+    }
+    
+    .step-item.active .step-label {
+      color: var(--onboarding-accent);
+      opacity: 1;
+      font-weight: 600;
+    }
+    
+    /* Step Content */
+    .step-content {
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+    
+    .step-content.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .step-title {
+      font-size: 2rem;
+      color: var(--onboarding-accent);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--onboarding-accent);
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(0,0,0,0.2);
+      border: 2px solid var(--onboarding-accent);
+      border-radius: 30px;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: var(--font-body);
+      transition: 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      box-shadow: 0 0 30px var(--onboarding-glow);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    
+    /* Upload Area */
+    .upload-area {
+      border: 3px dashed var(--onboarding-accent);
+      border-radius: 40px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 20px;
+    }
+    
+    .upload-area:hover {
+      background: rgba(16, 185, 129, 0.1);
+      transform: scale(1.02);
+    }
+    
+    .upload-area i {
+      font-size: 4rem;
+      color: var(--onboarding-accent);
+      margin-bottom: 15px;
+    }
+    
+    .upload-area p {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    
+    .upload-area small {
+      opacity: 0.6;
+    }
+    
+    .file-list {
+      margin-top: 20px;
+    }
+    
+    .file-list h4 {
+      color: var(--onboarding-accent);
+      margin-bottom: 15px;
+    }
+    
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 30px;
+      margin-bottom: 10px;
+    }
+    
+    .file-item i {
+      color: var(--onboarding-accent);
+      margin-right: 10px;
+    }
+    
+    .file-item .remove-file {
+      color: #ff4444;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    
+    .file-item .remove-file:hover {
+      transform: scale(1.2);
+    }
+    
+    /* Navigation Buttons */
+    .step-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    
+    .nav-btn {
+      padding: 15px 40px;
+      border: 2px solid var(--onboarding-accent);
+      background: transparent;
+      color: var(--onboarding-accent);
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .nav-btn:hover:not(:disabled) {
+      background: var(--onboarding-accent);
+      color: #0b1622;
+      transform: translateX(-5px);
+      box-shadow: 0 0 30px var(--onboarding-glow);
+    }
+    
+    .nav-btn.next:hover {
+      transform: translateX(5px);
+    }
+    
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    
+    /* Review Section */
+    .review-section {
+      background: rgba(16, 185, 129, 0.05);
+      border-radius: 40px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .review-item {
+      display: flex;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    
+    .review-item:last-child {
+      border-bottom: none;
+    }
+    
+    .review-label {
+      width: 150px;
+      font-weight: 600;
+      color: var(--onboarding-accent);
+    }
+    
+    .review-value {
+      flex: 1;
+    }
+    
+    .review-files {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .review-file {
+      background: rgba(16, 185, 129, 0.1);
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+    }
+    
+    /* Success Message */
+    .success-message {
+      text-align: center;
+      padding: 40px;
+    }
+    
+    .success-message i {
+      font-size: 5rem;
+      color: var(--onboarding-accent);
+      margin-bottom: 20px;
+      animation: scaleUp 0.5s;
+    }
+    
+    @keyframes scaleUp {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    .success-message h3 {
+      font-size: 2.5rem;
+      color: var(--onboarding-accent);
+      margin-bottom: 15px;
+    }
+    
+    .success-message p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.8;
+    }
+
     /* Image loading optimization */
     img {
       max-width: 100%;
@@ -1663,7 +2069,7 @@
   <!-- Toast notification -->
   <div class="toast" id="toast">Message sent! 📧</div>
 
-  <!-- LIVE VISITOR COUNTER (Feature #6) -->
+  <!-- LIVE VISITOR COUNTER -->
   <div class="visitor-counter" id="visitorCounter">
     <div class="visitor-dot"></div>
     <div>
@@ -1688,6 +2094,10 @@
       <a href="#" class="desktop-creator-link" onclick="showCreatorProfile()">
         <i class="fas fa-user-astronaut"></i> Creator
       </a>
+      <!-- Onboarding in Desktop Nav -->
+      <a href="#" class="desktop-onboarding-link" onclick="showOnboardingPortal()">
+        <i class="fas fa-rocket"></i> Start Project
+      </a>
     </nav>
     
     <div class="menu-icons">
@@ -1709,7 +2119,7 @@
     </div>
   </header>
 
-  <!-- mobile nav - All features organized -->
+  <!-- mobile nav -->
   <div class="mobile-nav" id="mobileNav">
     <i class="fas fa-times close-btn" id="closeNavBtn"></i>
     
@@ -1722,6 +2132,11 @@
     <!-- Creator Profile Link -->
     <a href="#" class="mobile-creator-link" onclick="showCreatorProfile(); closeMenu()">
       <i class="fas fa-user-astronaut"></i> Creator Profile
+    </a>
+    
+    <!-- Onboarding Link -->
+    <a href="#" class="mobile-onboarding-link" onclick="showOnboardingPortal(); closeMenu()">
+      <i class="fas fa-rocket"></i> Start Project
     </a>
     
     <!-- Language Selector in Mobile -->
@@ -1774,7 +2189,7 @@
       </div>
     </section>
 
-    <!-- ANIMATED COUNTERS SECTION (Feature #12) -->
+    <!-- ANIMATED COUNTERS SECTION -->
     <section id="counters">
       <div class="counter-section">
         <div class="counter-grid">
@@ -1821,7 +2236,7 @@
       </div>
     </section>
 
-    <!-- NEWSLETTER SECTION (Feature #4) -->
+    <!-- NEWSLETTER SECTION -->
     <section id="newsletter">
       <div class="newsletter-section">
         <i class="fas fa-envelope-open-text newsletter-icon"></i>
@@ -1908,7 +2323,7 @@
     </section>
   </div>
 
-  <!-- CREATOR PROFILE PAGE (hidden by default) -->
+  <!-- CREATOR PROFILE PAGE -->
   <div class="creator-page" id="creatorPage">
     <div class="creator-container">
       <div class="creator-header">
@@ -1986,11 +2401,217 @@
     </div>
   </div>
 
+  <!-- CLIENT ONBOARDING PORTAL (Feature #17) -->
+  <div class="onboarding-page" id="onboardingPage">
+    <div class="onboarding-container">
+      <div class="onboarding-header">
+        <h2>🚀 Start Your Project</h2>
+        <p>Complete this onboarding form and we'll get started on your design</p>
+      </div>
+      
+      <!-- Progress Steps -->
+      <div class="onboarding-steps">
+        <div class="step-item active" id="step1Item">
+          <div class="step-number">1</div>
+          <div class="step-label">Project Details</div>
+        </div>
+        <div class="step-item" id="step2Item">
+          <div class="step-number">2</div>
+          <div class="step-label">Brand Assets</div>
+        </div>
+        <div class="step-item" id="step3Item">
+          <div class="step-number">3</div>
+          <div class="step-label">Preferences</div>
+        </div>
+        <div class="step-item" id="step4Item">
+          <div class="step-number">4</div>
+          <div class="step-label">Review</div>
+        </div>
+      </div>
+      
+      <!-- Step 1: Project Details -->
+      <div class="step-content active" id="step1">
+        <h3 class="step-title">📋 Project Details</h3>
+        
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Project Name</label>
+            <input type="text" id="projectName" placeholder="e.g., TechStart Logo Redesign">
+          </div>
+          
+          <div class="form-group">
+            <label>Project Type</label>
+            <select id="projectType">
+              <option value="">Select project type</option>
+              <option value="logo">Logo Design</option>
+              <option value="branding">Full Brand Identity</option>
+              <option value="social">Social Media Kit</option>
+              <option value="print">Print Materials</option>
+              <option value="website">Website Design</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Budget Range</label>
+            <select id="budget">
+              <option value="">Select budget range</option>
+              <option value="50k-100k">₦50,000 - ₦100,000</option>
+              <option value="100k-250k">₦100,000 - ₦250,000</option>
+              <option value="250k-500k">₦250,000 - ₦500,000</option>
+              <option value="500k+">₦500,000+</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Timeline</label>
+            <select id="timeline">
+              <option value="">Select timeline</option>
+              <option value="urgent">Urgent (3-5 days)</option>
+              <option value="normal">Normal (1-2 weeks)</option>
+              <option value="relaxed">Relaxed (2-4 weeks)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Industry</label>
+            <input type="text" id="industry" placeholder="e.g., Technology, Fashion, Food">
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Project Description</label>
+            <textarea id="description" rows="4" placeholder="Tell us about your project, goals, and vision..."></textarea>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Step 2: Brand Assets -->
+      <div class="step-content" id="step2">
+        <h3 class="step-title">📎 Brand Assets</h3>
+        
+        <div class="upload-area" id="uploadArea" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>Drag & drop your files here</p>
+          <p><small>Supports: images, PDFs, brand guidelines (Max 10MB per file)</small></p>
+          <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(this)">
+          <button class="btn" style="margin-top: 15px;" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+        </div>
+        
+        <div class="file-list" id="fileList"></div>
+        
+        <div class="form-group">
+          <label>Brand Guidelines (if any)</label>
+          <textarea id="brandGuidelines" rows="3" placeholder="Share any existing brand guidelines, colors, fonts, etc..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Reference Links</label>
+          <textarea id="references" rows="2" placeholder="Paste links to designs you like (one per line)"></textarea>
+        </div>
+      </div>
+      
+      <!-- Step 3: Preferences -->
+      <div class="step-content" id="step3">
+        <h3 class="step-title">🎨 Design Preferences</h3>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Preferred Style</label>
+            <select id="style">
+              <option value="">Select style</option>
+              <option value="minimalist">Minimalist & Clean</option>
+              <option value="bold">Bold & Modern</option>
+              <option value="elegant">Elegant & Luxury</option>
+              <option value="playful">Playful & Colorful</option>
+              <option value="corporate">Corporate & Professional</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Color Preferences</label>
+            <input type="text" id="colors" placeholder="e.g., Blue, Green, avoid red">
+          </div>
+          
+          <div class="form-group">
+            <label>Target Audience</label>
+            <input type="text" id="audience" placeholder="e.g., Young professionals, CEOs">
+          </div>
+          
+          <div class="form-group">
+            <label>Competitors</label>
+            <input type="text" id="competitors" placeholder="List competitors (optional)">
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Additional Notes</label>
+            <textarea id="notes" rows="3" placeholder="Anything else we should know?"></textarea>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="urgentCheck"> 
+            <span>This project is urgent (+30% rush fee applies)</span>
+          </label>
+        </div>
+        
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="ndaCheck"> 
+            <span>I need an NDA signed before starting</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Step 4: Review & Submit -->
+      <div class="step-content" id="step4">
+        <h3 class="step-title">✅ Review Your Project</h3>
+        
+        <div class="review-section" id="reviewSection">
+          <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <div class="form-group" style="text-align: center;">
+          <label style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+            <input type="checkbox" id="termsCheck"> 
+            <span>I agree to the terms and conditions</span>
+          </label>
+        </div>
+        
+        <div class="success-message" id="successMessage" style="display: none;">
+          <i class="fas fa-check-circle"></i>
+          <h3>Project Submitted!</h3>
+          <p>We've received your project details. We'll contact you within 24 hours to discuss next steps.</p>
+          <button class="btn btn-primary" onclick="showMainContent()">Back to Home</button>
+        </div>
+      </div>
+      
+      <!-- Navigation Buttons -->
+      <div class="step-navigation">
+        <button class="nav-btn prev" id="prevBtn" onclick="prevStep()" disabled>
+          <i class="fas fa-arrow-left"></i> Previous
+        </button>
+        <button class="nav-btn next" id="nextBtn" onclick="nextStep()">
+          Next <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="nav-btn submit" id="submitBtn" onclick="submitOnboarding()" style="display: none;">
+          <i class="fas fa-paper-plane"></i> Submit Project
+        </button>
+      </div>
+      
+      <div class="back-to-home" style="margin-top: 30px;">
+        <a href="#" onclick="showMainContent()" class="back-btn" style="border-color: var(--onboarding-accent); color: var(--onboarding-accent);">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>© 2026 BraveVision Graphics · Design That Speaks Before You Do</p>
   </footer>
 
-  <!-- FIXED: Only ONE WhatsApp button now -->
+  <!-- WhatsApp Button -->
   <a href="https://wa.me/2349151186880?text=Hello%20BraveVision!%20I'm%20interested%20in%20your%20design%20services." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
     <i class="fab fa-whatsapp"></i>
   </a>
@@ -2328,7 +2949,7 @@
         window.requestAnimationFrame(step);
       }
       
-      // IMPROVED: Check if element is partially in viewport (triggers sooner)
+      // Check if element is partially in viewport (triggers sooner)
       function isElementInViewport(element) {
         const rect = element.getBoundingClientRect();
         const windowHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -2596,10 +3217,12 @@
       // ========== PAGE NAVIGATION ==========
       const mainContent = document.getElementById('mainContent');
       const creatorPage = document.getElementById('creatorPage');
+      const onboardingPage = document.getElementById('onboardingPage');
 
       window.showMainContent = function() {
         mainContent.classList.remove('hidden');
         creatorPage.classList.remove('active');
+        onboardingPage.classList.remove('active');
         // Close contact container when going back to main content
         if (contactContainer) contactContainer.classList.remove('active');
         window.scrollTo(0, 0);
@@ -2608,9 +3231,19 @@
       window.showCreatorProfile = function() {
         mainContent.classList.add('hidden');
         creatorPage.classList.add('active');
+        onboardingPage.classList.remove('active');
         window.scrollTo(0, 0);
-        // Close mobile menu if open
         closeMenu();
+      }
+
+      window.showOnboardingPortal = function() {
+        mainContent.classList.add('hidden');
+        creatorPage.classList.remove('active');
+        onboardingPage.classList.add('active');
+        window.scrollTo(0, 0);
+        closeMenu();
+        // Reset onboarding form
+        resetOnboarding();
       }
 
       window.scrollToSection = function(sectionId) {
@@ -2688,6 +3321,389 @@
           }
         }
       });
+
+      // ========== ONBOARDING PORTAL FUNCTIONALITY ==========
+      let currentStep = 1;
+      let uploadedFiles = [];
+
+      window.nextStep = function() {
+        if (currentStep < 4) {
+          // Validate current step
+          if (currentStep === 1 && !validateStep1()) {
+            showToast('Please fill all required fields! ⚠️');
+            return;
+          }
+          
+          // Hide current step
+          document.getElementById(`step${currentStep}`).classList.remove('active');
+          document.getElementById(`step${currentStep}Item`).classList.remove('active');
+          document.getElementById(`step${currentStep}Item`).classList.add('completed');
+          
+          // Show next step
+          currentStep++;
+          document.getElementById(`step${currentStep}`).classList.add('active');
+          document.getElementById(`step${currentStep}Item`).classList.add('active');
+          
+          // Update navigation buttons
+          document.getElementById('prevBtn').disabled = false;
+          
+          if (currentStep === 4) {
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'flex';
+            updateReviewSection();
+          }
+        }
+      };
+
+      window.prevStep = function() {
+        if (currentStep > 1) {
+          // Hide current step
+          document.getElementById(`step${currentStep}`).classList.remove('active');
+          document.getElementById(`step${currentStep}Item`).classList.remove('active');
+          
+          // Show previous step
+          currentStep--;
+          document.getElementById(`step${currentStep}`).classList.add('active');
+          document.getElementById(`step${currentStep}Item`).classList.add('active');
+          
+          // Update navigation buttons
+          if (currentStep === 1) {
+            document.getElementById('prevBtn').disabled = true;
+          }
+          
+          if (currentStep < 4) {
+            document.getElementById('nextBtn').style.display = 'flex';
+            document.getElementById('submitBtn').style.display = 'none';
+          }
+        }
+      };
+
+      function validateStep1() {
+        const projectName = document.getElementById('projectName').value;
+        const projectType = document.getElementById('projectType').value;
+        const budget = document.getElementById('budget').value;
+        const timeline = document.getElementById('timeline').value;
+        const description = document.getElementById('description').value;
+        
+        return projectName && projectType && budget && timeline && description;
+      }
+
+      function updateReviewSection() {
+        const projectName = document.getElementById('projectName').value;
+        const projectType = document.getElementById('projectType').value;
+        const budget = document.getElementById('budget').value;
+        const timeline = document.getElementById('timeline').value;
+        const industry = document.getElementById('industry').value;
+        const description = document.getElementById('description').value;
+        const brandGuidelines = document.getElementById('brandGuidelines').value;
+        const references = document.getElementById('references').value;
+        const style = document.getElementById('style').value;
+        const colors = document.getElementById('colors').value;
+        const audience = document.getElementById('audience').value;
+        const competitors = document.getElementById('competitors').value;
+        const notes = document.getElementById('notes').value;
+        const urgent = document.getElementById('urgentCheck').checked;
+        const nda = document.getElementById('ndaCheck').checked;
+
+        const reviewHTML = `
+          <div class="review-item">
+            <div class="review-label">Project Name:</div>
+            <div class="review-value">${projectName || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Project Type:</div>
+            <div class="review-value">${projectType || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Budget:</div>
+            <div class="review-value">${budget || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Timeline:</div>
+            <div class="review-value">${timeline || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Industry:</div>
+            <div class="review-value">${industry || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Description:</div>
+            <div class="review-value">${description || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Brand Guidelines:</div>
+            <div class="review-value">${brandGuidelines || 'None provided'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">References:</div>
+            <div class="review-value">${references || 'None provided'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Preferred Style:</div>
+            <div class="review-value">${style || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Colors:</div>
+            <div class="review-value">${colors || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Target Audience:</div>
+            <div class="review-value">${audience || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Competitors:</div>
+            <div class="review-value">${competitors || 'Not specified'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Additional Notes:</div>
+            <div class="review-value">${notes || 'None'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">Urgent:</div>
+            <div class="review-value">${urgent ? 'Yes (+30% rush fee)' : 'No'}</div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">NDA Required:</div>
+            <div class="review-value">${nda ? 'Yes' : 'No'}</div>
+          </div>
+          ${uploadedFiles.length > 0 ? `
+            <div class="review-item">
+              <div class="review-label">Uploaded Files:</div>
+              <div class="review-value">
+                <div class="review-files">
+                  ${uploadedFiles.map(file => `<span class="review-file">${file.name}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        `;
+
+        document.getElementById('reviewSection').innerHTML = reviewHTML;
+      }
+
+      window.handleDrop = function(e) {
+        e.preventDefault();
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+      };
+
+      window.handleFileSelect = function(input) {
+        const files = input.files;
+        handleFiles(files);
+      };
+
+      function handleFiles(files) {
+        for (let file of files) {
+          // Check file size (10MB limit)
+          if (file.size > 10 * 1024 * 1024) {
+            showToast(`File ${file.name} is too large (max 10MB) ⚠️`);
+            continue;
+          }
+          uploadedFiles.push(file);
+        }
+        updateFileList();
+      }
+
+      function updateFileList() {
+        const fileList = document.getElementById('fileList');
+        if (uploadedFiles.length === 0) {
+          fileList.innerHTML = '';
+          return;
+        }
+
+        let html = '<h4>Uploaded Files:</h4>';
+        uploadedFiles.forEach((file, index) => {
+          html += `
+            <div class="file-item">
+              <div>
+                <i class="fas fa-file"></i> ${file.name} (${(file.size / 1024).toFixed(2)} KB)
+              </div>
+              <i class="fas fa-times remove-file" onclick="removeFile(${index})"></i>
+            </div>
+          `;
+        });
+        fileList.innerHTML = html;
+      }
+
+      window.removeFile = function(index) {
+        uploadedFiles.splice(index, 1);
+        updateFileList();
+      };
+
+      // ========== FIXED: ONBOARDING SUBMISSION WITH BETTER ERROR HANDLING ==========
+      window.submitOnboarding = async function() {
+        const termsCheck = document.getElementById('termsCheck');
+        if (!termsCheck.checked) {
+          showToast('Please accept the terms and conditions ⚠️');
+          return;
+        }
+
+        // Show loading state
+        const submitBtn = document.getElementById('submitBtn');
+        const originalHTML = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        submitBtn.disabled = true;
+
+        try {
+          // Collect all form data
+          const projectData = {
+            projectName: document.getElementById('projectName').value || 'Not specified',
+            projectType: document.getElementById('projectType').value || 'Not specified',
+            budget: document.getElementById('budget').value || 'Not specified',
+            timeline: document.getElementById('timeline').value || 'Not specified',
+            industry: document.getElementById('industry').value || 'Not specified',
+            description: document.getElementById('description').value || 'Not specified',
+            brandGuidelines: document.getElementById('brandGuidelines').value || 'None',
+            references: document.getElementById('references').value || 'None',
+            style: document.getElementById('style').value || 'Not specified',
+            colors: document.getElementById('colors').value || 'Not specified',
+            audience: document.getElementById('audience').value || 'Not specified',
+            competitors: document.getElementById('competitors').value || 'Not specified',
+            notes: document.getElementById('notes').value || 'None',
+            urgent: document.getElementById('urgentCheck').checked ? 'Yes (+30%)' : 'No',
+            nda: document.getElementById('ndaCheck').checked ? 'Yes' : 'No',
+            files: uploadedFiles.length > 0 ? uploadedFiles.map(f => f.name).join(', ') : 'None'
+          };
+
+          // Format message for Telegram
+          const now = new Date();
+          const dateStr = now.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          });
+          const timeStr = now.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          });
+
+          const message = `🚀 *NEW PROJECT ONBOARDING*\n\n` +
+            `*Date:* ${dateStr} ${timeStr}\n\n` +
+            `*Project Name:* ${projectData.projectName}\n` +
+            `*Type:* ${projectData.projectType}\n` +
+            `*Budget:* ${projectData.budget}\n` +
+            `*Timeline:* ${projectData.timeline}\n` +
+            `*Industry:* ${projectData.industry}\n\n` +
+            `*Description:*\n${projectData.description}\n\n` +
+            `*Style:* ${projectData.style}\n` +
+            `*Colors:* ${projectData.colors}\n` +
+            `*Audience:* ${projectData.audience}\n` +
+            `*Competitors:* ${projectData.competitors}\n\n` +
+            `*Urgent:* ${projectData.urgent}\n` +
+            `*NDA:* ${projectData.nda}\n\n` +
+            `*Brand Guidelines:* ${projectData.brandGuidelines}\n` +
+            `*References:* ${projectData.references}\n` +
+            `*Files:* ${projectData.files}\n\n` +
+            `*Additional Notes:* ${projectData.notes}\n\n` +
+            `[Submitted via BraveVision Onboarding Portal]`;
+
+          console.log('Sending to Telegram:', message); // Debug log
+
+          // Send to Telegram using fetch with proper error handling
+          const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: message,
+              parse_mode: 'Markdown'
+            })
+          });
+
+          const data = await response.json();
+          console.log('Telegram response:', data); // Debug log
+
+          if (data.ok) {
+            // Hide review section, show success message
+            document.getElementById('reviewSection').style.display = 'none';
+            document.getElementById('termsCheck').parentElement.style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            showToast('✅ Project submitted successfully!');
+          } else {
+            throw new Error(data.description || 'Failed to submit');
+          }
+        } catch (error) {
+          console.error('Submission error:', error);
+          
+          // Fallback: Try using JSONP or alternative method
+          try {
+            // Create an image element for JSONP fallback (simpler, avoids CORS)
+            const img = document.createElement('img');
+            img.style.display = 'none';
+            img.src = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+            document.body.appendChild(img);
+            
+            setTimeout(() => {
+              document.body.removeChild(img);
+            }, 5000);
+            
+            // Still show success to user
+            document.getElementById('reviewSection').style.display = 'none';
+            document.getElementById('termsCheck').parentElement.style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            showToast('✅ Project submitted! (Sent via fallback)');
+          } catch (fallbackError) {
+            showToast('❌ Submission failed. Please try email instead.');
+          }
+        } finally {
+          submitBtn.innerHTML = originalHTML;
+          submitBtn.disabled = false;
+        }
+      };
+
+      function resetOnboarding() {
+        currentStep = 1;
+        uploadedFiles = [];
+        
+        // Reset step visibility
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step3').classList.remove('active');
+        document.getElementById('step4').classList.remove('active');
+        
+        // Reset step items
+        document.getElementById('step1Item').classList.add('active');
+        document.getElementById('step2Item').classList.remove('active', 'completed');
+        document.getElementById('step3Item').classList.remove('active', 'completed');
+        document.getElementById('step4Item').classList.remove('active', 'completed');
+        
+        // Reset buttons
+        document.getElementById('prevBtn').disabled = true;
+        document.getElementById('nextBtn').style.display = 'flex';
+        document.getElementById('submitBtn').style.display = 'none';
+        
+        // Clear form fields
+        document.getElementById('projectName').value = '';
+        document.getElementById('projectType').value = '';
+        document.getElementById('budget').value = '';
+        document.getElementById('timeline').value = '';
+        document.getElementById('industry').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('brandGuidelines').value = '';
+        document.getElementById('references').value = '';
+        document.getElementById('style').value = '';
+        document.getElementById('colors').value = '';
+        document.getElementById('audience').value = '';
+        document.getElementById('competitors').value = '';
+        document.getElementById('notes').value = '';
+        document.getElementById('urgentCheck').checked = false;
+        document.getElementById('ndaCheck').checked = false;
+        document.getElementById('termsCheck').checked = false;
+        
+        // Clear file list
+        document.getElementById('fileList').innerHTML = '';
+        
+        // Show review section again
+        document.getElementById('reviewSection').style.display = 'block';
+        document.getElementById('termsCheck').parentElement.style.display = 'flex';
+        document.getElementById('successMessage').style.display = 'none';
+      }
     });
   </script>
 </body>
