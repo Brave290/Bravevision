@@ -4359,7 +4359,7 @@
               </p>
               <p>
                 <i class="fab fa-telegram-plane"></i>
-                <a href="https://t.me/saheedbidemi" target="_blank">@saheedbidemi</a>
+                <a href="t.me/Bravevision001" target="_blank">@Bravevision001</a>
               </p>
               <p>
                 <i class="fab fa-whatsapp"></i>
@@ -4449,9 +4449,9 @@
               <span>+234 915 118 688</span>
             </div>
             
-            <div class="creator-contact-item" onclick="window.open('https://t.me/saheedbidemi', '_blank')">
+            <div class="creator-contact-item" onclick="window.open('t.me/Bravevision001', '_blank')">
               <i class="fab fa-telegram"></i>
-              <span>@saheedbidemi</span>
+              <span>@Bravevision001</span>
             </div>
           </div>
         </div>
@@ -4509,10 +4509,10 @@
               <option value="">Select project type</option>
               <option value="logo">Logo Design</option>
               <option value="branding">Full Brand Identity</option>
-              <option value="social">Social Media Kit</option>
-              <option value="print">Print Materials</option>
+              <option value="social">Business card</option>
+              <option value="print">Flyer Design</option>
               <option value="website">Website Design</option>
-              <option value="other">Other</option>
+              <option value="other">Others Please specify</option>
             </select>
           </div>
           
@@ -4520,10 +4520,10 @@
             <label>Budget Range</label>
             <select id="budget">
               <option value="">Select budget range</option>
-              <option value="50k-100k">₦50,000 - ₦100,000</option>
-              <option value="100k-250k">₦100,000 - ₦250,000</option>
-              <option value="250k-500k">₦250,000 - ₦500,000</option>
-              <option value="500k+">₦500,000+</option>
+              <option value="5k-10k">₦5000 - ₦10000</option>
+              <option value="20k-30k">₦20,000 - ₦30,000</option>
+              <option value="50k-70k">₦50,000 - ₦70,000</option>
+              <option value="100k+">₦100,000+</option>
             </select>
           </div>
           
@@ -4676,7 +4676,7 @@
       <div class="thankyou-details">
         <div class="thankyou-detail-item">
           <i class="fas fa-envelope"></i>
-          <span>Confirmation sent to your email</span>
+          <span>We Will get back to you Shortly ✅</span>
         </div>
         <div class="thankyou-detail-item">
           <i class="fas fa-clock"></i>
@@ -4688,7 +4688,7 @@
         </div>
         <div class="thankyou-detail-item">
           <i class="fab fa-telegram"></i>
-          <span>Telegram: @saheedbidemi</span>
+          <span>Telegram: @Bravevision001</span>
         </div>
       </div>
       
@@ -5025,7 +5025,7 @@
         if (!visitorCount) return;
         
         // Generate random number between 50-200 for demo
-        const randomVisitors = Math.floor(Math.random() * 150) + 50;
+        const randomVisitors = Math.floor(Math.random() * 1) + 20;
         visitorCount.textContent = randomVisitors;
       }
       
@@ -5155,7 +5155,7 @@
             const data = await response.json();
             
             if (data.ok) {
-              showToast('✅ Subscribed! Check your email for confirmation.');
+              showToast('✅ Subscribed! You have successfully subscribed to our newsletter.');
               document.getElementById('newsletterEmail').value = '';
             } else {
               throw new Error(data.description || 'Failed to subscribe');
@@ -5225,7 +5225,7 @@
             const data = await response.json();
             
             if (data.ok) {
-              showToast('✅ Message sent to Telegram!');
+              showToast('✅ Message sent to Support We will message you shortly!');
               messageInput.value = ''; // Clear input
             } else {
               throw new Error(data.description || 'Failed to send');
